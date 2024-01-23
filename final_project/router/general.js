@@ -19,28 +19,18 @@ public_users.post("/register", (req,res) => {
     return res.status(404).json({message: "Unable to register user."});
 });
 
-let getbooks = new Promise((resolve,reject) => {
-    setTimeout(() => {
-      resolve(books)
-    },10000)})
 
 // Get the book list available in the shop
 public_users.get('/',async function (req, res) {
   //Write your code here
-  allbooks=await getbooks
-  return res.send(JSON.stringify(allbooks,null,4));
+  return res.send(JSON.stringify(books,null,4));
 });
 
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',async function (req, res) {
-    let getbooksbyisbn = new Promise((resolve,reject) => {
-        setTimeout(() => {
-          resolve(books[req.params.isbn])
-        },10000)})
-  //Write your code here
-  result=await getbooksbyisbn
-  return res.send(JSON.stringify(result,null,4));
+
+  return res.send(JSON.stringify(books[req.params.isbn],null,4));
  });
 
  
@@ -48,9 +38,8 @@ public_users.get('/isbn/:isbn',async function (req, res) {
 // Get book details based on author
 public_users.get('/author/:author',async function (req, res) {
   //Write your code here
-  let getbooksbyauthor = new Promise((resolve,reject) => {
-    setTimeout(() => {
-        var filtredBook={}
+
+  var filtredBook={}
         var author=req.params.author
         for (isbn in books){
           var book=books[isbn]
@@ -59,19 +48,14 @@ public_users.get('/author/:author',async function (req, res) {
               filtredBook[isbn]=book
           }
         }
-      resolve(filtredBook)
-    },10000)})
-  result=await getbooksbyauthor
-  return res.send(JSON.stringify(result,null,4));
+  return res.send(JSON.stringify(filtredBook,null,4));
 });
 
 
 
 // Get all books based on title
 public_users.get('/title/:title',async function (req, res) {
-    let getbooksbytitle = new Promise((resolve,reject) => {
-        setTimeout(() => {
-            var filtredBook={}
+    var filtredBook={}
             var title=req.params.title
             for (isbn in books){
               var book=books[isbn]
@@ -80,10 +64,7 @@ public_users.get('/title/:title',async function (req, res) {
                   filtredBook[isbn]=book
               }
             }
-          resolve(filtredBook)
-        },10000)})
-    result=await getbooksbytitle
-    return res.send(JSON.stringify(result,null,4));
+    return res.send(JSON.stringify(filtredBook,null,4));
 });
 
 //  Get book review
